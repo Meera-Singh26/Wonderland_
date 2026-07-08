@@ -71,19 +71,20 @@ app.get("/listings/:id", async (req, res) => {
 });
 
 // Create
-
 app.post(
   "/listings",
   wrapAsync(async (req, res) => {
     if (!req.body.listing) {
       throw new ExpressError("Invalid Listing Data", 400);
     }
-    const newListing = new Listing(req.body.listing);
 
-  
-    if (!req.body.listing.image || !req.body.listing.image.url || req.body.listing.image.url.trim() === "") {
-      newListing.image = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?v=1"; 
+    let imageUrl = req.body.listing.image;
+    if (!imageUrl || imageUrl.trim() === "") {
+      imageUrl = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?v=1";
     }
+
+    const newListing = new Listing(req.body.listing);
+    newListing.image = { url: imageUrl, filename: "listingimage" };
 
     await newListing.save();
     res.redirect("/listings");
@@ -125,5 +126,14 @@ if (require.main === module) {
     console.log("🚀 Server running on port 8080 http://localhost:8080");
   });
 }
+const port = process.env.PORT || 8080;
+
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+}
+
+module.exports = app;
 
 module.exports = app;
