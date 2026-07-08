@@ -113,6 +113,10 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { err });
 });
 
-app.listen(8080, () => {
-  console.log("🚀 Server running on port 8080 http://localhost:8080");
-});
+if (require.main === module) {
+  app.listen(8080, () => {
+    console.log("🚀 Server running on port 8080 http://localhost:8080");
+  });
+}
+
+module.exports = app;
