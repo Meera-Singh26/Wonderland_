@@ -79,8 +79,9 @@ app.post(
     }
 
     let imageUrl = req.body.listing.image;
-    if (!imageUrl || imageUrl.trim() === "") {
-      imageUrl = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?v=1";
+
+    if (typeof imageUrl !== "string" || imageUrl.trim() === "") {
+      imageUrl = "";
     }
 
     const newListing = new Listing(req.body.listing);
