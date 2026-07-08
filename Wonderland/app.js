@@ -81,7 +81,7 @@ app.post(
     const newListing = new Listing(req.body.listing);
 
   
-    if (!req.body.listing.image || req.body.listing.image.trim() === "") {
+    if (!req.body.listing.image || !req.body.listing.image.url || req.body.listing.image.url.trim() === "") {
       newListing.image = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?v=1"; 
     }
 
