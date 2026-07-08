@@ -1,0 +1,20 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="text-center mt-5">
+  <h2>Payment Successful!</h2>
+  <p>Thank you for your payment.</p>
+
+  <% if (session && session.amount_total) { %>
+    <p><b>Amount Paid:</b> ₹<%= (session.amount_total / 100).toLocaleString("en-IN") %></p>
+  <% } %>
+
+  <% if (session && session.payment_status) { %>
+    <p><b>Status:</b> <%= session.payment_status %></p>
+  <% } %>
+
+  <% if (session && session.customer_details && session.customer_details.email) { %>
+    <p><b>Email:</b> <%= session.customer_details.email %></p>
+  <% } %>
+
+  <a href="/listings" class="btn btn-primary mt-3">Go back to Listings</a>
+</div>
