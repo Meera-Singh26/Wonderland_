@@ -71,6 +71,7 @@ app.get("/listings/:id", async (req, res) => {
 });
 
 // Create
+
 app.post(
   "/listings",
   wrapAsync(async (req, res) => {
@@ -78,6 +79,12 @@ app.post(
       throw new ExpressError("Invalid Listing Data", 400);
     }
     const newListing = new Listing(req.body.listing);
+
+  
+    if (!req.body.listing.image || req.body.listing.image.trim() === "") {
+      newListing.image = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?v=1"; 
+    }
+
     await newListing.save();
     res.redirect("/listings");
   })
